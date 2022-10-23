@@ -696,3 +696,34 @@ procdump(void)
     printf("\n");
   }
 }
+
+ 
+// get number of proc
+uint64
+nproc(void)
+{
+    uint64 cnt = 0;
+
+    for (struct proc *p = proc; p < &proc[NPROC]; p++) {
+        // acquire(&p -> lock);
+        if (p -> state == UNUSED) {
+            cnt++;
+        }
+        // release(&p -> lock);
+    }
+
+    return cnt;
+}
+
+uint64
+nfd(void) {
+    uint64 cnt = 0;
+
+    for (int fd = 0; fd < NOFILE; fd++) {
+        if (myproc() -> ofile[fd] == 0) {
+            cnt++;
+        }
+    }
+
+    return cnt;
+}
